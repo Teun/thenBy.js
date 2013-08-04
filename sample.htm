@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        // pasted in:
+        function firstBy(e) { var t = function (t, r) { return e(t, r) || n(t, r) }; t.thenBy = function (e) { if (n.thenBy) { n.thenBy(e) } else { n = firstBy(e) } return t }; var n = function () { return 0 }; return t }
+
+        // sample:
+        var data = [
+            { id: 7, name:  "Amsterdam", population: 750000, country: "Netherlands" },
+            { id: 12, name: "The Hague", population: 450000, country: "Netherlands" },
+            { id: 43, name: "Rotterdam", population: 600000, country: "Netherlands" },
+            { id: 5, name:  "Berlin", population: 3000000, country: "Germany" },
+            { id: 42, name: "Düsseldorf", population: 600000, country: "Germany" },
+            { id: 44, name: "Stuttgard", population: 600000, country: "Germany" },
+        ];
+        function output() {
+            for (var i = 0; i < data.length; i++) {
+                document.write(data[i].name + "<br/>");
+            }
+            document.write("<br/>");
+        }
+        output();
+
+        // first by country, then by pop, should give Berlin first, Amsterdam last
+        var s = firstBy(function (v1, v2) { return v1.country < v2.country ? -1 : (v1.country > v2.country ? 1 : 0); })
+                 .thenBy(function (v1, v2) { return v1.population - v2.population; });
+        data.sort(s);
+        output();
+        // first by length of name, should give Stuttgard just after Rotterdam (same length, same pop)
+        s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
+                 .thenBy(function (v1, v2) { return v1.population - v2.population; })
+                 .thenBy(function (v1, v2) { return v1.id - v2.id; });
+        data.sort(s);
+        output();
+
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>
