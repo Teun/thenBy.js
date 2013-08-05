@@ -14,4 +14,6 @@ data.sort(
 
 ```
 
-To include it into your page/project, just paste the minified code from https://raw.github.com/bergus/thenBy.js/master/thenBy.min.js into yours (137 characters). A source attribution would be nice of course.
+To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (137 characters). 
+
+Thanks a lot to https://github.com/bergus for hsi improvements.
