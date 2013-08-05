@@ -1,21 +1,17 @@
-function firstBy(init_function) {
-    var sorter = function (v1, v2) {
-        // if initial returns 0, we return the result from the secondary function
-        // this is why || is called the dafault operator
-        return init_function(v1, v2) || secondary_function(v1, v2);
+firstBy = (function() {
+    /* mixin for the `thenBy` property */
+    function extend(f) {
+        f.thenBy = tb;
+        return f;
     }
-    // the sorter has a thenBy method that allows appecding functions for secondary sorting
-    sorter.thenBy = function (ftb) {
-        // if the secondary is already set, we pass on the thenBy-function to the tail of the chain
-        if (secondary_function.thenBy) {
-            secondary_function.thenBy(ftb);
-        } else {
-            // set the secondary function
-            secondary_function = firstBy(ftb);
-        }
-        return sorter;
-    };
-    // initialize the secondary function on something that doesn't care
-    var secondary_function = function () { return 0; }
-    return sorter;
-}
+    /* adds a secondary compare function to the target function (`this` context)
+       which is applied in case the first one returns 0 (equal)
+       returns a new compare function, which has a `thenBy` method as well */
+    function tb(y) {
+        var x = this;
+        return extend(function(a, b) {
+            return x(a,b) || y(a,b);
+        });
+    }
+    return extend;
+})();
