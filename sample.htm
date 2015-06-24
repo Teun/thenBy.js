@@ -12,7 +12,7 @@
             { id: 12, name: "The Hague", population: 450000, country: "Netherlands" },
             { id: 43, name: "Rotterdam", population: 600000, country: "Netherlands" },
             { id: 5, name:  "Berlin", population: 3000000, country: "Germany" },
-            { id: 42, name: "Düsseldorf", population: 600000, country: "Germany" },
+            { id: 42, name: "Düsseldorf", population: 550000, country: "Germany" },
             { id: 44, name: "Stuttgard", population: 600000, country: "Germany" },
         ];
         function output() {
@@ -23,7 +23,7 @@
         }
         output();
 
-        // first by country, then by pop, should give Berlin first, Amsterdam last
+        // first by country, then by pop, should give Düsseldorf first, Amsterdam last
         var s = firstBy(function (v1, v2) { return v1.country < v2.country ? -1 : (v1.country > v2.country ? 1 : 0); })
                  .thenBy(function (v1, v2) { return v1.population - v2.population; });
         data.sort(s);

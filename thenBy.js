@@ -14,16 +14,27 @@
    limitations under the License.
  */
 firstBy = (function() {
-    /* mixin for the `thenBy` property */
-    function extend(f) {
-        f.thenBy = tb;
-        return f;
+    function makeCompareFunction(f, direction){
+      if(typeof(f)!="function"){
+        var prop = f;
+        f = function(v1,v2){return v1[prop] < v2[prop] ? -1 : (v1[prop] > v2[prop] ? 1 : 0);}
+      }
+      if(direction === -1)return function(v1,v2){return -f(v1,v2)};
+      return f;
     }
+    /* mixin for the `thenBy` property */
+    function extend(f, d) {
+      f=makeCompareFunction(f, d);
+      f.thenBy = tb;
+      return f;
+    }
+
     /* adds a secondary compare function to the target function (`this` context)
        which is applied in case the first one returns 0 (equal)
        returns a new compare function, which has a `thenBy` method as well */
-    function tb(y) {
+    function tb(y, d) {
         var x = this;
+        y = makeCompareFunction(y, d);
         return extend(function(a, b) {
             return x(a,b) || y(a,b);
         });
