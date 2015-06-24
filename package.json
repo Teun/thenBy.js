@@ -1,0 +1,26 @@
+{
+  "name": "thenBy.js",
+  "version": "1.0.0",
+  "description": "Micro library for sorting arrays using the firstBy().thenBy().thenBy() syntax",
+  "main": "thenBy.module.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Teun/thenBy.js.git"
+  },
+  "keywords": [
+    "sort",
+    "order",
+    "sorting",
+    "arrays",
+    "multiple"
+  ],
+"files": [
+    "thenBy.module.js"
+  ],
+  "author": "Teun Duynstee",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/Teun/thenBy.js/issues"
+  },
+  "homepage": "https://github.com/Teun/thenBy.js"
+}
