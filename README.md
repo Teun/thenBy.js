@@ -11,9 +11,31 @@ data.sort(
     .thenBy(function (v1, v2) { return v1.population - v2.population; })
     .thenBy(function (v1, v2) { return v1.id - v2.id; })
 );
-
 ```
 
-To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (137 characters). 
+### Sort by property names
+Javascript sorting relies heavily on passing discriminator functions that return -1, 0 or 1 for a pair of items. While this is very flexible, often you want to sort on the value of a simple property. As a convenience, thenBy.js builds the appropriate compare function for you if you pass in a property name (instead of a function). The example above would then look like this:
+```javascript
+// first by length of name, then by population, then by ID
+data.sort(
+    firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
+    .thenBy("population")
+    .thenBy("id")
+);
+```
+
+### Sort descending
+thenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:
+```javascript
+// first by length of name descending, then by population descending, then by ID ascending
+data.sort(
+    firstBy(function (v1, v2) { return v1.name.length - v2.name.length; }, -1)
+    .thenBy("population", -1)
+    .thenBy("id")
+);
+```
+
+### Install
+To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (304 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable.
 
 Thanks a lot to https://github.com/bergus for his improvements.
