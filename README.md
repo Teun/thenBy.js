@@ -24,6 +24,17 @@ data.sort(
 );
 ```
 
+### Sort by unary functions
+You can also pass a function that takes a single item and returns its sorting key.
+```
+// first by length of name, then by population, then by ID
+data.sort(
+    firstBy(function (v) { return v.name.length; })
+    .thenBy(function (v) { return v.population; })
+    .thenBy("id")
+);
+```
+
 ### Sort descending
 thenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:
 ```javascript
