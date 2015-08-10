@@ -24,10 +24,33 @@ suite('Sorting with functions', function () {
         assert.equal("Düsseldorf", cityData[0].name);
         done();
     });
+    test('Sort by Country, then by Population, using unary functions', function(done) {
+        var s = firstBy(function(v) { return v.country; })
+                .thenBy(function(v) { return v.population; });
+        cityData.sort(s);
+        assert.equal("Amsterdam", cityData[5].name);
+        assert.equal("Düsseldorf", cityData[0].name);
+        done();
+    });
     test('Sort by length of name, then by population, then by ID', function (done) {
         var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
                  .thenBy(function (v1, v2) { return v1.population - v2.population; })
                  .thenBy(function (v1, v2) { return v1.id - v2.id; });
+        cityData.sort(s);
+        // shortest name
+        assert.equal("Berlin", cityData[0].name);
+        // longest name
+        assert.equal("Düsseldorf", cityData[5].name);
+
+        // expect Stutgard just after Rotterdam, same name length, same population, higher ID
+        assert.equal("Rotterdam", cityData[2].name);
+        assert.equal("Stuttgard", cityData[3].name);
+        done();
+    });
+    test('Sort by length of name, then by population, then by ID, using unary functions', function (done) {
+        var s = firstBy(function (v) { return v.name.length; })
+                 .thenBy(function (v) { return v.population; })
+                 .thenBy(function (v) { return v.id; });
         cityData.sort(s);
         // shortest name
         assert.equal("Berlin", cityData[0].name);
@@ -94,6 +117,14 @@ suite('Sorting with functions and property names together', function () {
         assert.equal("Düsseldorf", cityData[5].name);
         done();
     });
+    test('Sort by name length using a unary function, then by Population', function (done) {
+    	var s = firstBy(function (v) { return v.name.length; })
+                .thenBy("population");
+        cityData.sort(s);
+        assert.equal("Berlin", cityData[0].name);
+        assert.equal("Düsseldorf", cityData[5].name);
+        done();
+    });
     test('Sort by name length desc, then by Population', function (done) {
     	var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; }, -1)
                 .thenBy("population");
@@ -102,8 +133,24 @@ suite('Sorting with functions and property names together', function () {
         assert.equal("The Hague", cityData[1].name);
         done();
     });
+    test('Sort by name length desc using a unary function, then by Population', function (done) {
+    	var s = firstBy(function (v) { return v.name.length; }, -1)
+                .thenBy("population");
+        cityData.sort(s);
+        assert.equal("Amsterdam", cityData[4].name);
+        assert.equal("The Hague", cityData[1].name);
+        done();
+    });
     test('Sort by name length, then by Population desc', function (done) {
     	var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
+                .thenBy("population", -1);
+        cityData.sort(s);
+        assert.equal("Amsterdam", cityData[1].name);
+        assert.equal("The Hague", cityData[4].name);
+        done();
+    });
+    test('Sort by name length using a unary function, then by Population desc', function (done) {
+    	var s = firstBy(function (v) { return v.name.length; })
                 .thenBy("population", -1);
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[1].name);

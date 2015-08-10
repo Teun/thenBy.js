@@ -24,6 +24,17 @@ data.sort(
 );
 ```
 
+### Sort by unary functions
+You can also pass a function that takes a single item and returns its sorting key.
+```
+// first by length of name, then by population, then by ID
+data.sort(
+    firstBy(function (v) { return v.name.length; })
+    .thenBy(function (v) { return v.population; })
+    .thenBy("id")
+);
+```
+
 ### Sort descending
 thenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:
 ```javascript
@@ -36,7 +47,7 @@ data.sort(
 ```
 
 ### Install in your HTML
-To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (304 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
+To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (380 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
 
 ### Install in node.js
 ```npm install git+https://git@github.com/Teun/thenBy.js.git```
@@ -46,4 +57,4 @@ then in your app:
 ```var firstBy = require('thenBy.js');```
 
 
-Thanks a lot to https://github.com/bergus for his improvements.
+Thanks a lot to https://github.com/bergus and https://github.com/hagabaka for their improvements.
