@@ -17,12 +17,13 @@ firstBy = (function() {
     function makeCompareFunction(f, direction){
       if(typeof(f)!="function"){
         var prop = f;
-        f = function(v1,v2){return v1[prop] < v2[prop] ? -1 : (v1[prop] > v2[prop] ? 1 : 0);}
+        // make unary function
+        f = function(v1){return v1[prop];}
       }
       if(f.length === 1) {
         // f is a unary function mapping a single item to its sort score
         var uf = f;
-        f = function(v1,v2) {return uf(v1) < uf(v2) ? -1 : (uf(v1) > uf(v2) ? 1 : 0);}
+        f = function(v1,v2) {return uf(v1) < uf(v2) ? -1 : uf(v1) > uf(v2) ? 1 : 0;}
       }
       if(direction === -1)return function(v1,v2){return -f(v1,v2)};
       return f;
