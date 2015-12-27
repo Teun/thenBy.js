@@ -158,3 +158,38 @@ suite('Sorting with functions and property names together', function () {
         done();
     });
 });
+suite('Sorting with property names and undefined properties', function () {
+	var cityData =  [
+            { id: 7, name:  "Amsterdam", population: 750000, country: "Netherlands" },
+            { id: 12, name: "The Hague", population: 450000, country: "Netherlands" },
+            { id: 43, name: "Rotterdam", population: 600000 }, // Missing country: Netherlands
+            { id: 5, name:  "Berlin", population: 3000000, country: "Germany" },
+            { id: 42, name: "Düsseldorf", country: "Germany" }, // Missing population: 550000
+            { id: 44, population: 600000, country: "Germany" }, // Missing name: Stuttgard
+        ];
+
+    test('Sort by Country, then by Population, missing country comes first', function (done) {
+    	var s = firstBy("country")
+                .thenBy("population");
+        cityData.sort(s);
+        assert.equal("Amsterdam", cityData[5].name);
+        assert.equal("Rotterdam", cityData[0].name);
+        done();
+    });
+    test('Sort by Country desc, then by Population, missing country comes last', function (done) {
+    	var s = firstBy("country", -1)
+                .thenBy("population");
+        cityData.sort(s);
+        assert.equal("Rotterdam", cityData[5].name);
+        assert.equal("The Hague", cityData[0].name);
+        done();
+    });
+    test('Sort by Country, then by Population desc', function (done) {
+    	var s = firstBy("country")
+                .thenBy("population", -1);
+        cityData.sort(s);
+        assert.equal("The Hague", cityData[5].name);
+        assert.equal("Rotterdam", cityData[0].name);
+        done();
+    });
+});
