@@ -24,6 +24,8 @@ data.sort(
 );
 ```
 
+If an element doesn't have the property defined, it will sort like the empty string (""). Typically, this will be at the top.
+
 ### Sort by unary functions
 You can also pass a function that takes a single item and returns its sorting key.
 ```
@@ -47,7 +49,7 @@ data.sort(
 ```
 
 ### Install in your HTML
-To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (356 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
+To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (364 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
 
 ### Install in node.js
 ```npm install git+https://git@github.com/Teun/thenBy.js.git```
@@ -57,4 +59,4 @@ then in your app:
 ```var firstBy = require('thenBy.js');```
 
 
-Thanks a lot to https://github.com/bergus and https://github.com/hagabaka for their improvements.
+Thanks a lot to https://github.com/bergus, https://github.com/hagabaka and https://github.com/infolyzer for their improvements.

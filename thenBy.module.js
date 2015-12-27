@@ -18,7 +18,7 @@ module.exports = (function() {
       if(typeof(f)!="function"){
         var prop = f;
         // make unary function
-        f = function(v1){return v1[prop];}
+        f = function(v1){return !!v1[prop] ? v1[prop] : "";}
       }
       if(f.length === 1) {
         // f is a unary function mapping a single item to its sort score
