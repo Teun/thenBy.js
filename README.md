@@ -52,11 +52,11 @@ data.sort(
 To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (364 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
 
 ### Install in node.js
-```npm install git+https://git@github.com/Teun/thenBy.js.git```
+```npm install thenby```
 
 then in your app:
 
-```var firstBy = require('thenBy.js');```
+```var firstBy = require('thenby');```
 
 
 Thanks a lot to https://github.com/bergus, https://github.com/hagabaka and https://github.com/infolyzer for their improvements.
