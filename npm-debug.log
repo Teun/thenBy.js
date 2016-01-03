@@ -1,0 +1,93 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.3.6
+3 info using node@v5.0.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/teun/Documents/Repos/thenBy.js',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/teun/.npm/thenby/1.1.2/package.tgz not in flight; packing
+9 info lifecycle thenby@1.1.2~prepublish: thenby@1.1.2
+10 silly lifecycle thenby@1.1.2~prepublish: no script for prepublish, continuing
+11 verbose tar pack [ '/Users/teun/.npm/thenby/1.1.2/package.tgz',
+11 verbose tar pack   '/Users/teun/Documents/Repos/thenBy.js' ]
+12 verbose tarball /Users/teun/.npm/thenby/1.1.2/package.tgz
+13 verbose folder /Users/teun/Documents/Repos/thenBy.js
+14 verbose addLocalTarball adding from inside cache /Users/teun/.npm/thenby/1.1.2/package.tgz
+15 silly cache afterAdd thenby@1.1.2
+16 verbose afterAdd /Users/teun/.npm/thenby/1.1.2/package/package.json not in flight; writing
+17 verbose afterAdd /Users/teun/.npm/thenby/1.1.2/package/package.json written
+18 silly publish { name: 'thenby',
+18 silly publish   version: '1.1.2',
+18 silly publish   description: 'Micro library for sorting arrays using the firstBy().thenBy().thenBy() syntax',
+18 silly publish   main: 'thenBy.module.js',
+18 silly publish   repository: { type: 'git', url: 'https://github.com/Teun/thenBy.js.git' },
+18 silly publish   keywords: [ 'sort', 'order', 'sorting', 'arrays', 'multiple' ],
+18 silly publish   files: [ 'thenBy.module.js' ],
+18 silly publish   author: { name: 'Teun Duynstee' },
+18 silly publish   license: 'Apache 2.0',
+18 silly publish   bugs: { url: 'https://github.com/Teun/thenBy.js/issues' },
+18 silly publish   homepage: 'https://github.com/Teun/thenBy.js',
+18 silly publish   readme: 'thenBy.js\n=========\n\n`thenBy` is a javascript micro library that helps sorting arrays on multiple keys. It allows you to use the [native Array::sort() method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) of javascript, but pass in multiple functions to sort that are composed with `firstBy().thenBy().thenBy()` style.\n\nExample:\n```javascript\n// first by length of name, then by population, then by ID\ndata.sort(\n    firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })\n    .thenBy(function (v1, v2) { return v1.population - v2.population; })\n    .thenBy(function (v1, v2) { return v1.id - v2.id; })\n);\n```\n\n### Sort by property names\nJavascript sorting relies heavily on passing discriminator functions that return -1, 0 or 1 for a pair of items. While this is very flexible, often you want to sort on the value of a simple property. As a convenience, thenBy.js builds the appropriate compare function for you if you pass in a property name (instead of a function). The example above would then look like this:\n```javascript\n// first by length of name, then by population, then by ID\ndata.sort(\n    firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })\n    .thenBy("population")\n    .thenBy("id")\n);\n```\n\nIf an element doesn\'t have the property defined, it will sort like the empty string (""). Typically, this will be at the top.\n\n### Sort by unary functions\nYou can also pass a function that takes a single item and returns its sorting key.\n```\n// first by length of name, then by population, then by ID\ndata.sort(\n    firstBy(function (v) { return v.name.length; })\n    .thenBy(function (v) { return v.population; })\n    .thenBy("id")\n);\n```\n\n### Sort descending\nthenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:\n```javascript\n// first by length of name descending, then by population descending, then by ID ascending\ndata.sort(\n    firstBy(function (v1, v2) { return v1.name.length - v2.name.length; }, -1)\n    .thenBy("population", -1)\n    .thenBy("id")\n);\n```\n\n### Install in your HTML\nTo include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (364 characters). If you don\'t want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).\n\n### Install in node.js\n```npm install thenby```\n\nthen in your app:\n\n```var firstBy = require(\'thenby\');```\n\n\nThanks a lot to https://github.com/bergus, https://github.com/hagabaka and https://github.com/infolyzer for their improvements.\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: '433a618845e2605ee3dbcde40af4b5cc21cf6e86',
+18 silly publish   _id: 'thenby@1.1.2',
+18 silly publish   scripts: {},
+18 silly publish   _shasum: '1f801fe0d80c5ea720aa9d8b81d993b3c88de8af',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name thenby
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/thenby
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /Users/teun/.npm/thenby/1.1.2/package.tgz
+26 verbose request uri https://registry.npmjs.org/thenby
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 9:16:35 PM
+29 verbose request using bearer token for auth
+30 verbose request id fda5f72c494ac991
+31 http request PUT https://registry.npmjs.org/thenby
+32 http 403 https://registry.npmjs.org/thenby
+33 verbose headers { 'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=300',
+33 verbose headers   'content-length': '95',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   date: 'Sun, 03 Jan 2016 20:16:37 GMT',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   connection: 'keep-alive',
+33 verbose headers   'x-served-by': 'cache-ams4149-AMS',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1451852195.935180,VS0,VE1427' }
+34 verbose request invalidating /Users/teun/.npm/registry.npmjs.org/thenby on PUT
+35 error publish Failed PUT 403
+36 verbose stack Error: "You cannot publish over the previously published version 1.1.2." : thenby
+36 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+36 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+36 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+36 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+36 verbose stack     at emitTwo (events.js:87:13)
+36 verbose stack     at Request.emit (events.js:172:7)
+36 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1063:14)
+36 verbose stack     at emitOne (events.js:82:20)
+36 verbose stack     at Request.emit (events.js:169:7)
+36 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+37 verbose statusCode 403
+38 verbose pkgid thenby
+39 verbose cwd /Users/teun/Documents/Repos/thenBy.js
+40 error Darwin 15.2.0
+41 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+42 error node v5.0.0
+43 error npm  v3.3.6
+44 error code E403
+45 error "You cannot publish over the previously published version 1.1.2." : thenby
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
