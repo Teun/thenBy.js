@@ -1,6 +1,9 @@
 thenBy.js
 =========
 
+  [![NPM Version][npm-image]][npm-url]
+  [![NPM Downloads][downloads-image]][downloads-url]
+
 `thenBy` is a javascript micro library that helps sorting arrays on multiple keys. It allows you to use the [native Array::sort() method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) of javascript, but pass in multiple functions to sort that are composed with `firstBy().thenBy().thenBy()` style.
 
 Example:
@@ -60,3 +63,9 @@ then in your app:
 
 
 Thanks a lot to https://github.com/bergus, https://github.com/hagabaka and https://github.com/infolyzer for their improvements.
+
+
+[npm-image]: https://img.shields.io/npm/v/thenby.svg
+[npm-url]: https://npmjs.org/package/thenby
+[downloads-image]: https://img.shields.io/npm/dm/thenby.svg
+[downloads-url]: https://npmjs.org/package/thenby
