@@ -71,6 +71,9 @@ then in your app:
 
 ```var firstBy = require('thenby');```
 
+### Install via Bower
+```bower install --save thenby```
+
 
 Thanks a lot to https://github.com/bergus, https://github.com/hagabaka and https://github.com/infolyzer for their improvements.
 
