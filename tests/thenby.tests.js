@@ -64,6 +64,63 @@ suite('Sorting with functions', function () {
     });
 
 });
+suite('Sorting while managing case sensitivity', function () {
+  var cityData =  [
+    { id: 2, name:  "Ostrava", population: 750000, country: "czech republic"},
+    { id: 4, name: "karvina", population: 450000, country: "Czech Republic"},
+    { id: 6, name: "Brno", population: 600000, country: "czech Republic"},
+    { id: 8, name:  "prague", population: 3000000, country: "Czech republic"},
+  ];
+
+  test('Sort by Name, using unary function', function (done) {
+    var s = firstBy(function(v) { return v.name });
+    cityData.sort(s);
+    assert.equal("Brno", cityData[0].name);
+    assert.equal("Ostrava", cityData[1].name);
+    assert.equal("karvina", cityData[2].name);
+    assert.equal("prague", cityData[3].name);
+    done();
+  });
+  test('Sort by Name, ignoring the case, using unary function', function (done) {
+    var s = firstBy(function(v) { return v.name }, 1, true);
+    cityData.sort(s);
+    assert.equal("Brno", cityData[0].name);
+    assert.equal("karvina", cityData[1].name);
+    assert.equal("Ostrava", cityData[2].name);
+    assert.equal("prague", cityData[3].name);
+    done();
+  });
+  test('Sort by Country, then by Name ignoring the case, using property name', function (done) {
+    var s = firstBy("country")
+      .thenBy("name", 1, true);
+    cityData.sort(s);
+    assert.equal("karvina", cityData[0].name);
+    assert.equal("prague", cityData[1].name);
+    assert.equal("Brno", cityData[2].name);
+    assert.equal("Ostrava", cityData[3].name);
+    done();
+  });
+  test('Sort by Country ignoring the case using inline .toLowerCase(), then by Name, using function', function (done) {
+    var s = firstBy(function (v1, v2) { v1 = v1.country.toLowerCase(); v2 = v2.country.toLowerCase(); return v1 < v2 ? -1 : (v1 > v2 ? 1 : 0); })
+      .thenBy("name");
+    cityData.sort(s);
+    assert.equal("Brno", cityData[0].name);
+    assert.equal("Ostrava", cityData[1].name);
+    assert.equal("karvina", cityData[2].name);
+    assert.equal("prague", cityData[3].name);
+    done();
+  });
+  test('Sort by Country ignoring the case, then by Name ignoring the case, using unary function', function (done) {
+    var s = firstBy(function(v) { return v.country }, 1, true)
+      .thenBy(function(v) { return v.name }, 1, true);
+    cityData.sort(s);
+    assert.equal("Brno", cityData[0].name);
+    assert.equal("karvina", cityData[1].name);
+    assert.equal("Ostrava", cityData[2].name);
+    assert.equal("prague", cityData[3].name);
+    done();
+  });
+});
 suite('Sorting with property names', function () {
 	var cityData =  [
             { id: 7, name:  "Amsterdam", population: 750000, country: "Netherlands" },
