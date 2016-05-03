@@ -14,36 +14,55 @@
    limitations under the License.
  */
 module.exports = (function() {
-    function makeCompareFunction(f, direction){
+    function handleCase(value, ignoreCase) {
+      return ignoreCase ? value.toLowerCase() : value;
+    }
+    function makeCompareFunction(f, direction, ignoreCase){
+      if(typeof(ignoreCase)=="undefined"){
+        ignoreCase = false;
+      }
       if(typeof(f)!="function"){
         var prop = f;
         // make unary function
         f = function(v1){return !!v1[prop] ? v1[prop] : "";}
       }
+      if(f.length > 1 && ignoreCase) {
+        console.warn('Cannot ignore case for non-unary functions. Please use ".toLowerCase()" when declaring the compare function.');
+      }
       if(f.length === 1) {
         // f is a unary function mapping a single item to its sort score
         var uf = f;
-        f = function(v1,v2) {return uf(v1) < uf(v2) ? -1 : uf(v1) > uf(v2) ? 1 : 0;}
+        f = function(v1,v2) {
+          v1 = uf(v1);
+          v2 = uf(v2);
+          // if the values are string
+          if (typeof(v1)=="string" && typeof(v2)=="string"){
+            // check if the case should be ignored
+            v1 = handleCase(v1, ignoreCase);
+            v2 = handleCase(v2, ignoreCase);
+          }
+          return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+        }
       }
       if(direction === -1)return function(v1,v2){return -f(v1,v2)};
       return f;
     }
     /* mixin for the `thenBy` property */
-    function extend(f, d) {
-      f=makeCompareFunction(f, d);
+    function extend(f, d, c) {
+      f=makeCompareFunction(f, d, c);
       f.thenBy = tb;
       return f;
     }
 
     /* adds a secondary compare function to the target function (`this` context)
-       which is applied in case the first one returns 0 (equal)
-       returns a new compare function, which has a `thenBy` method as well */
-    function tb(y, d) {
-        var x = this;
-        y = makeCompareFunction(y, d);
-        return extend(function(a, b) {
-            return x(a,b) || y(a,b);
-        });
+     which is applied in case the first one returns 0 (equal)
+     returns a new compare function, which has a `thenBy` method as well */
+    function tb(y, d, c) {
+      var x = this;
+      y = makeCompareFunction(y, d, c);
+      return extend(function(a, b) {
+        return x(a,b) || y(a,b);
+      });
     }
     return extend;
 })();
