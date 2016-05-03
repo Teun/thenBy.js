@@ -82,7 +82,7 @@ suite('Sorting while managing case sensitivity', function () {
     done();
   });
   test('Sort by Name, ignoring the case, using unary function', function (done) {
-    var s = firstBy(function(v) { return v.name }, 1, true);
+    var s = firstBy(function(v) { return v.name }, {ignoreCase:true, direction:1});
     cityData.sort(s);
     assert.equal("Brno", cityData[0].name);
     assert.equal("karvina", cityData[1].name);
@@ -92,7 +92,7 @@ suite('Sorting while managing case sensitivity', function () {
   });
   test('Sort by Country, then by Name ignoring the case, using property name', function (done) {
     var s = firstBy("country")
-      .thenBy("name", 1, true);
+      .thenBy("name", {ignoreCase:true, direction:1});
     cityData.sort(s);
     assert.equal("karvina", cityData[0].name);
     assert.equal("prague", cityData[1].name);
@@ -111,8 +111,8 @@ suite('Sorting while managing case sensitivity', function () {
     done();
   });
   test('Sort by Country ignoring the case, then by Name ignoring the case, using unary function', function (done) {
-    var s = firstBy(function(v) { return v.country }, 1, true)
-      .thenBy(function(v) { return v.name }, 1, true);
+    var s = firstBy(function(v) { return v.country }, {ignoreCase:true, direction:1})
+      .thenBy(function(v) { return v.name }, {ignoreCase:true, direction:1});
     cityData.sort(s);
     assert.equal("Brno", cityData[0].name);
     assert.equal("karvina", cityData[1].name);
