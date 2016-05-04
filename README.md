@@ -61,8 +61,25 @@ data.sort(
 );
 ```
 
+### Case insensitive sorting
+thenBy.js. All of the shortcut methods allow you to sort case insensitive as well. The second parameter expects an options object (if it is a number, it is interpreted as `direction` as above). The ignoreCase property can be set to true, like this:
+```javascript
+// first by name, case insensitive, then by population
+data.sort(
+    firstBy("name", {ignoreCase:true})
+    .thenBy("population")
+);
+```
+If you want to use both descending and ignoreCase, you have to use the options syntax for direction as well:
+```javascript
+// sort by name, case insensitive and descending
+data.sort(firstBy("name", {ignoreCase:true, direction:-1}));
+```
+
+
+
 ### Install in your HTML
-To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (364 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
+To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (525 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
 
 ### Install in node.js
 ```npm install thenby```

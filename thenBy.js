@@ -14,23 +14,30 @@
    limitations under the License.
  */
 firstBy = (function() {
-    function makeCompareFunction(f, direction){
-      if(typeof(f)!="function"){
+
+    function identity(v){return v;}
+
+    function ignoreCase(v){return typeof(v)==="string" ? v.toLowerCase() : v;}
+
+    function makeCompareFunction(f, opt){
+     opt = typeof(opt)==="number" ? {direction:opt} : opt||{}; 
+     if(typeof(f)!="function"){
         var prop = f;
         // make unary function
         f = function(v1){return !!v1[prop] ? v1[prop] : "";}
       }
       if(f.length === 1) {
         // f is a unary function mapping a single item to its sort score
-        var uf = f;
-        f = function(v1,v2) {return uf(v1) < uf(v2) ? -1 : uf(v1) > uf(v2) ? 1 : 0;}
+        var uf = f; 
+        var preprocess = opt.ignoreCase?ignoreCase:identity;
+        f = function(v1,v2) {return preprocess(uf(v1)) < preprocess(uf(v2)) ? -1 : preprocess(uf(v1)) > preprocess(uf(v2)) ? 1 : 0;}
       }
-      if(direction === -1)return function(v1,v2){return -f(v1,v2)};
+      if(opt.direction === -1)return function(v1,v2){return -f(v1,v2)};
       return f;
     }
     /* mixin for the `thenBy` property */
-    function extend(f, d) {
-      f=makeCompareFunction(f, d);
+    function extend(f, opt) {
+      f=makeCompareFunction(f, opt);
       f.thenBy = tb;
       return f;
     }
@@ -38,9 +45,9 @@ firstBy = (function() {
     /* adds a secondary compare function to the target function (`this` context)
        which is applied in case the first one returns 0 (equal)
        returns a new compare function, which has a `thenBy` method as well */
-    function tb(y, d) {
+    function tb(y, opt) {
         var x = this;
-        y = makeCompareFunction(y, d);
+        y = makeCompareFunction(y, opt);
         return extend(function(a, b) {
             return x(a,b) || y(a,b);
         });

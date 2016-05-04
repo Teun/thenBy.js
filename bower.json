@@ -1,6 +1,6 @@
 {
   "name": "thenby",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "Micro library for sorting arrays using the firstBy().thenBy().thenBy() syntax",
   "main": "thenBy.min.js",
   "authors": [
@@ -14,7 +14,7 @@
     "arrays",
     "multiple"
   ],
-  "homepage": "https://github.com/shaununderwood/thenBy.js",
+  "homepage": "https://github.com/Teun/thenBy.js",
   "moduleType": [],
   "ignore": [
     "**/.*",
