@@ -14,8 +14,11 @@
    limitations under the License.
  */
 firstBy = (function() {
-    function id(v){return v;}
+
+    function identity(v){return v;}
+
     function ignoreCase(v){return typeof(v)==="string" ? v.toLowerCase() : v;}
+
     function makeCompareFunction(f, opt){
      opt = typeof(opt)==="number" ? {direction:opt} : opt||{}; 
      if(typeof(f)!="function"){
@@ -26,7 +29,7 @@ firstBy = (function() {
       if(f.length === 1) {
         // f is a unary function mapping a single item to its sort score
         var uf = f; 
-        var preprocess = opt.ignoreCase?ignoreCase:id;
+        var preprocess = opt.ignoreCase?ignoreCase:identity;
         f = function(v1,v2) {return preprocess(uf(v1)) < preprocess(uf(v2)) ? -1 : preprocess(uf(v1)) > preprocess(uf(v2)) ? 1 : 0;}
       }
       if(opt.direction === -1)return function(v1,v2){return -f(v1,v2)};
