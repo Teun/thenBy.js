@@ -62,7 +62,7 @@ data.sort(
 ```
 
 ### Case insensitive sorting
-thenBy.js. All of the shortcut methods allow you to sort case insensitive as well. The second parameter expects an options object (if it is a number, it is interpreted as `direction` as above). The ignoreCase property can be set to true, like this:
+(as of v1.2.0) All of the shortcut methods allow you to sort case insensitive as well. The second parameter expects an options object (if it is a number, it is interpreted as `direction` as above). The ignoreCase property can be set to true, like this:
 ```javascript
 // first by name, case insensitive, then by population
 data.sort(
