@@ -250,3 +250,55 @@ suite('Sorting with property names and undefined properties', function () {
         done();
     });
 });
+
+suite('Sorting performance', function () {
+	var randomData =  [];
+    for (var i = 0; i < 1000; i++) {
+        randomData.push({firstNumber:Math.floor(Math.random() * 100), secondNumber: Math.floor(Math.random() * 100)});
+    }
+
+    test('Should not be much slower than handcoded', function (done) {
+        var start = Date.now();
+        for (var i = 0; i < 100; i++) {
+            var clone = randomData.slice(0);
+            clone.sort(firstBy("firstNumber").thenBy("secondNumber", -1));
+        }
+        var lap1 = Date.now() - start;
+        console.log("Using property names", lap1);
+        
+        start = Date.now();
+        for (var i = 0; i < 100; i++) {
+            var clone = randomData.slice(0);
+            clone.sort(firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;}));
+        }
+        var lap3 = Date.now() - start;
+        console.log("unary functions", lap3);
+        
+        start = Date.now();
+        for (var i = 0; i < 100; i++) {
+            var clone = randomData.slice(0);
+            clone.sort(firstBy(function(a,b){
+                return a.firstNumber - b.firstNumber;
+            })
+            .thenBy(function(a,b){
+                return a.secondNumber - b.fristNumber;
+            }));
+        }
+        var lap4 = Date.now() - start;
+        console.log("two optimized functions", lap2);
+        
+        start = Date.now();
+        for (var i = 0; i < 100; i++) {
+            var clone = randomData.slice(0);
+            clone.sort(function(a,b){
+                if(a.firstNumber === b.firstNumber){
+                    return a.secondNumber - b.secondNumber;
+                }
+                return a.firstNumber - b.firstNumber;
+            });
+        }
+        var lap2 = Date.now() - start;
+        console.log("optimized hand coded", lap2);
+        done();
+    });
+});
