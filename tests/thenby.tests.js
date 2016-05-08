@@ -258,46 +258,50 @@ suite('Sorting performance', function () {
     }
 
     test('Should not be much slower than handcoded', function (done) {
-        var start = Date.now();
+        var start = performance.now();
+        var compare = firstBy("firstNumber").thenBy("secondNumber", -1);
         for (var i = 0; i < 100; i++) {
             var clone = randomData.slice(0);
-            clone.sort(firstBy("firstNumber").thenBy("secondNumber", -1));
+            clone.sort(compare);
         }
-        var lap1 = Date.now() - start;
+        var lap1 = performance.now() - start;
         console.log("Using property names", lap1);
         
-        start = Date.now();
+        start = performance.now();
+        compare = firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;});
         for (var i = 0; i < 100; i++) {
             var clone = randomData.slice(0);
-            clone.sort(firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;}));
+            clone.sort(compare);
         }
-        var lap3 = Date.now() - start;
+        var lap3 = performance.now() - start;
         console.log("unary functions", lap3);
         
-        start = Date.now();
-        for (var i = 0; i < 100; i++) {
-            var clone = randomData.slice(0);
-            clone.sort(firstBy(function(a,b){
+        start = performance.now();
+        compare = firstBy(function(a,b){
                 return a.firstNumber - b.firstNumber;
             })
             .thenBy(function(a,b){
-                return a.secondNumber - b.fristNumber;
-            }));
-        }
-        var lap4 = Date.now() - start;
-        console.log("two optimized functions", lap2);
-        
-        start = Date.now();
+                return b.secondNumber - a.secondNumber;
+            });
         for (var i = 0; i < 100; i++) {
             var clone = randomData.slice(0);
-            clone.sort(function(a,b){
+            clone.sort(compare);
+        }
+        var lap4 = performance.now() - start;
+        console.log("two optimized functions", lap4);
+        
+        start = performance.now();
+        compare = function(a,b){
                 if(a.firstNumber === b.firstNumber){
-                    return a.secondNumber - b.secondNumber;
+                    return b.secondNumber - a.secondNumber;
                 }
                 return a.firstNumber - b.firstNumber;
-            });
+            }
+        for (var i = 0; i < 100; i++) {
+            var clone = randomData.slice(0);
+            clone.sort(compare);
         }
-        var lap2 = Date.now() - start;
+        var lap2 = performance.now() - start;
         console.log("optimized hand coded", lap2);
         done();
     });
