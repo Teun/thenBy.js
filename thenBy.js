@@ -39,12 +39,13 @@ firstBy = (function() {
     /* adds a secondary compare function to the target function (`this` context)
        which is applied in case the first one returns 0 (equal)
        returns a new compare function, which has a `thenBy` method as well */
-    function tb(y, opt) {
-        var x = typeof(this) == "function" ? this : function(){return 0;};
-        y = makeCompareFunction(y, opt);
-        function f(a, b) {
-            return x(a,b) || y(a,b);
-        };
+    function tb(func, opt) {
+        var x = typeof(this) == "function" ? this : false;
+        var y = makeCompareFunction(func, opt);
+        var f = x ? function(a, b) {
+                        return x(a,b) || y(a,b);
+                    } 
+                  : y;
         f.thenBy = tb;
         return f;
     }

@@ -258,22 +258,25 @@ suite('Sorting performance', function () {
     }
 
     test('Should not be much slower than handcoded', function (done) {
+        var clone;
         var start = performance.now();
         var compare = firstBy("firstNumber").thenBy("secondNumber", -1);
         for (var i = 0; i < 100; i++) {
-            var clone = randomData.slice(0);
+            clone = randomData.slice(0);
             clone.sort(compare);
         }
         var lap1 = performance.now() - start;
+        var secondNumberOne = clone[0].secondNumber;
         console.log("Using property names", lap1);
         
         start = performance.now();
-        compare = firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;});
+        compare = firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;}, -1);
         for (var i = 0; i < 100; i++) {
-            var clone = randomData.slice(0);
+            clone = randomData.slice(0);
             clone.sort(compare);
         }
         var lap3 = performance.now() - start;
+        assert.equal(clone[0].secondNumber, secondNumberOne);
         console.log("unary functions", lap3);
         
         start = performance.now();
@@ -284,10 +287,11 @@ suite('Sorting performance', function () {
                 return b.secondNumber - a.secondNumber;
             });
         for (var i = 0; i < 100; i++) {
-            var clone = randomData.slice(0);
+            clone = randomData.slice(0);
             clone.sort(compare);
         }
         var lap4 = performance.now() - start;
+        assert.equal(clone[0].secondNumber, secondNumberOne);
         console.log("two optimized functions", lap4);
         
         start = performance.now();
@@ -298,10 +302,11 @@ suite('Sorting performance', function () {
                 return a.firstNumber - b.firstNumber;
             }
         for (var i = 0; i < 100; i++) {
-            var clone = randomData.slice(0);
+            clone = randomData.slice(0);
             clone.sort(compare);
         }
         var lap2 = performance.now() - start;
+        assert.equal(clone[0].secondNumber, secondNumberOne);
         console.log("optimized hand coded", lap2);
         done();
     });
