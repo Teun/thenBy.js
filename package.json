@@ -9,12 +9,12 @@
   },
   "keywords": [
     "sort",
-      "order",
+    "order",
     "sorting",
     "arrays",
     "multiple"
   ],
-"files": [
+  "files": [
     "thenBy.module.js"
   ],
   "author": "Teun Duynstee",
@@ -22,5 +22,12 @@
   "bugs": {
     "url": "https://github.com/Teun/thenBy.js/issues"
   },
-  "homepage": "https://github.com/Teun/thenBy.js"
+  "homepage": "https://github.com/Teun/thenBy.js",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-insert": "^0.5.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-uglify": "^1.5.3"
+  }
 }
