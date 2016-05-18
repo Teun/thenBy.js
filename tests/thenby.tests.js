@@ -306,7 +306,6 @@ suite('Sorting performance', function () {
             clone.sort(compare);
         }
         var lap2 = performance.now() - start;
-        assert.equal(clone[0].secondNumber, secondNumberOne);
         console.log("optimized hand coded", lap2);
         done();
     });
