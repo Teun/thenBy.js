@@ -250,3 +250,63 @@ suite('Sorting with property names and undefined properties', function () {
         done();
     });
 });
+
+suite('Sorting performance', function () {
+	var randomData =  [];
+    for (var i = 0; i < 1000; i++) {
+        randomData.push({firstNumber:Math.floor(Math.random() * 100), secondNumber: Math.floor(Math.random() * 100)});
+    }
+
+    test('Should not be much slower than handcoded', function (done) {
+        var clone;
+        var start = performance.now();
+        var compare = firstBy("firstNumber").thenBy("secondNumber", -1);
+        for (var i = 0; i < 100; i++) {
+            clone = randomData.slice(0);
+            clone.sort(compare);
+        }
+        var lap1 = performance.now() - start;
+        var secondNumberOne = clone[0].secondNumber;
+        console.log("Using property names", lap1);
+        
+        start = performance.now();
+        compare = firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;}, -1);
+        for (var i = 0; i < 100; i++) {
+            clone = randomData.slice(0);
+            clone.sort(compare);
+        }
+        var lap3 = performance.now() - start;
+        assert.equal(clone[0].secondNumber, secondNumberOne);
+        console.log("unary functions", lap3);
+        
+        start = performance.now();
+        compare = firstBy(function(a,b){
+                return a.firstNumber - b.firstNumber;
+            })
+            .thenBy(function(a,b){
+                return b.secondNumber - a.secondNumber;
+            });
+        for (var i = 0; i < 100; i++) {
+            clone = randomData.slice(0);
+            clone.sort(compare);
+        }
+        var lap4 = performance.now() - start;
+        assert.equal(clone[0].secondNumber, secondNumberOne);
+        console.log("two optimized functions", lap4);
+        
+        start = performance.now();
+        compare = function(a,b){
+                if(a.firstNumber === b.firstNumber){
+                    return b.secondNumber - a.secondNumber;
+                }
+                return a.firstNumber - b.firstNumber;
+            }
+        for (var i = 0; i < 100; i++) {
+            clone = randomData.slice(0);
+            clone.sort(compare);
+        }
+        var lap2 = performance.now() - start;
+        console.log("optimized hand coded", lap2);
+        done();
+    });
+});

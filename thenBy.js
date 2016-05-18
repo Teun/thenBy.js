@@ -35,22 +35,19 @@ firstBy = (function() {
       if(opt.direction === -1)return function(v1,v2){return -f(v1,v2)};
       return f;
     }
-    /* mixin for the `thenBy` property */
-    function extend(f, opt) {
-      f=makeCompareFunction(f, opt);
-      f.thenBy = tb;
-      return f;
-    }
 
     /* adds a secondary compare function to the target function (`this` context)
        which is applied in case the first one returns 0 (equal)
        returns a new compare function, which has a `thenBy` method as well */
-    function tb(y, opt) {
-        var x = this;
-        y = makeCompareFunction(y, opt);
-        return extend(function(a, b) {
-            return x(a,b) || y(a,b);
-        });
+    function tb(func, opt) {
+        var x = typeof(this) == "function" ? this : false;
+        var y = makeCompareFunction(func, opt);
+        var f = x ? function(a, b) {
+                        return x(a,b) || y(a,b);
+                    } 
+                  : y;
+        f.thenBy = tb;
+        return f;
     }
-    return extend;
+    return tb;
 })();
