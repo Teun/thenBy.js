@@ -15,7 +15,8 @@
     "multiple"
   ],
   "files": [
-    "thenBy.module.js"
+    "thenBy.module.js",
+    "thenBy.min.js"
   ],
   "author": "Teun Duynstee",
   "license": "Apache 2.0",
