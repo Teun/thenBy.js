@@ -1,3 +1,8 @@
+
+var assert = assert || require('chai').assert;
+var firstBy = firstBy || require('..');
+var performance = performance || {now: require('performance-now')};
+
 suite('Library set up', function () {
     test('firstBy should be in global scope', function (done) {
         if (firstBy) {
@@ -268,7 +273,7 @@ suite('Sorting performance', function () {
         var lap1 = performance.now() - start;
         var secondNumberOne = clone[0].secondNumber;
         console.log("Using property names", lap1);
-        
+
         start = performance.now();
         compare = firstBy(function(a){return a.firstNumber;}).thenBy(function(a){return a.secondNumber;}, -1);
         for (var i = 0; i < 100; i++) {
@@ -278,7 +283,7 @@ suite('Sorting performance', function () {
         var lap3 = performance.now() - start;
         assert.equal(clone[0].secondNumber, secondNumberOne);
         console.log("unary functions", lap3);
-        
+
         start = performance.now();
         compare = firstBy(function(a,b){
                 return a.firstNumber - b.firstNumber;
@@ -293,7 +298,7 @@ suite('Sorting performance', function () {
         var lap4 = performance.now() - start;
         assert.equal(clone[0].secondNumber, secondNumberOne);
         console.log("two optimized functions", lap4);
-        
+
         start = performance.now();
         compare = function(a,b){
                 if(a.firstNumber === b.firstNumber){
