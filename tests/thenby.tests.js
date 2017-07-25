@@ -11,6 +11,7 @@ suite('Library set up', function () {
     });
 });
 
+
 suite('Sorting with functions', function () {
 	var cityData =  [
             { id: 7, name:  "Amsterdam", population: 750000, country: "Netherlands" },
@@ -255,6 +256,36 @@ suite('Sorting with property names and undefined properties', function () {
         done();
     });
 });
+suite('Sorting on numerical values', function () {
+    test('Sort strings with numbers in them', function (done) {
+        var values = ["2", "20", "03", "-2", "0", "200", "2"];
+        var sorted = values.sort(firstBy(Number));
+
+        ["-2", "0", "2", "2", "03", "20", "200"].forEach((v,i)=>{
+            assert.equal(sorted[i], v);
+        });
+        done();
+    });
+    test('Sort strings with numbers in them and normal numbers together', function (done) {
+        var values = ["2", "20", "03", "-2", "0", 200, "2"];
+        var sorted = values.sort(firstBy(Number));
+
+        ["-2", "0", "2", "2", "03", "20", 200].forEach((v,i)=>{
+            assert.equal(sorted[i], v);
+        });
+        done();
+    });
+    test('Sort strings with numbers in them in properties', function (done) {
+        var values = [{a:"2"}, {a:"20"}, {a:"03"}, {a:"-2"}, {a:"0"}, {a:"200"}, {a:"2"}];
+        var sorted = values.sort(firstBy(function(v){return Number(v.a)}));
+
+        ["-2", "0", "2", "2", "03", "20", "200"].forEach((v,i)=>{
+            assert.equal(sorted[i].a, v);
+        });
+        done();
+    });
+});
+
 
 suite('Sorting performance', function () {
 	var randomData =  [];

@@ -50,6 +50,12 @@ data.sort(
 );
 ```
 
+Note that javascript contains a number of standard functions that can be passed in here as well. The Number() function will make your sorting sort on numeric values instead of lexical values:
+```
+var values = ["2", "20", "03", "-2", "0", 200, "2"];
+var sorted = values.sort(firstBy(Number));
+```
+
 ### Sort descending
 thenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:
 ```javascript
