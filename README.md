@@ -15,16 +15,7 @@ data.sort(
     .thenBy(function (v1, v2) { return v1.id - v2.id; })
 );
 ```
-`thenBy` also offers some nice shortcuts that make the most commons ways of sorting even easier and more readable:
-
-```javascript
-// first by length of name, then by population, then by ID
-data.sort(
-    firstBy(function (v) { return v.name.length; })
-    .thenBy("population")
-    .thenBy("id")
-);
-```
+`thenBy` also offers some nice shortcuts that make the most common ways of sorting even easier and more readable.
 
 ### Sort by property names
 Javascript sorting relies heavily on passing discriminator functions that return -1, 0 or 1 for a pair of items. While this is very flexible, often you want to sort on the value of a simple property. As a convenience, thenBy.js builds the appropriate compare function for you if you pass in a property name (instead of a function). The example above would then look like this:
@@ -40,12 +31,12 @@ data.sort(
 If an element doesn't have the property defined, it will sort like the empty string (""). Typically, this will be at the top.
 
 ### Sort by unary functions
-You can also pass a function that takes a single item and returns its sorting key.
+You can also pass a function that takes a single item and returns its sorting key. This turns the above expression into:
 ```javascript
 // first by length of name, then by population, then by ID
 data.sort(
     firstBy(function (v) { return v.name.length; })
-    .thenBy(function (v) { return v.population; })
+    .thenBy("population")
     .thenBy("id")
 );
 ```
