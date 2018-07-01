@@ -1,13 +1,13 @@
 // Type definitions for thenBy
 // Definitions by: Teun Duynstee
 declare class opt{
-    direction?:number
+    direction?:number;
+    ignoreCase?:boolean;
 }
 interface IThenBy<T> {
     (v1: T, v2: T) : number;
     thenBy(key: ((v1: T, v2?: T) => any) | keyof T, direction?: number | opt): IThenBy<T>;
 }
-
-declare function firstBy<T = any>(key: ((v1: T, v2?: T) => any) | keyof T, direction?: number | opt): IThenBy<T>;
-
-export = firstBy;
+declare module "thenby" {
+    export function firstBy<T = any>(key: ((v1: T, v2?: T) => any) | keyof T, direction?: number | opt): IThenBy<T>;
+}

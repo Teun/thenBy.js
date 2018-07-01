@@ -42,6 +42,6 @@ gulp.task('mochanode', ['build'], () => {
         .pipe(mocha({reporter: 'tap', ui :'tdd'}))
 });
 
-gulp.task('test', ['mochaphantom', 'mochanode']);
+gulp.task('test', [/*'mochaphantom',*/ 'mochanode']);
 
 gulp.task('default', ['test']);

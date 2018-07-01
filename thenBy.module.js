@@ -40,7 +40,10 @@ module.exports = (function() {
        which is applied in case the first one returns 0 (equal)
        returns a new compare function, which has a `thenBy` method as well */
     function tb(func, opt) {
-        var x = typeof(this) == "function" ? this : false;
+        /* should get value false for the first call. This can be done by calling the 
+        exported function, or the firstBy property on it (for es6 module compatibility)
+        */
+        var x = (typeof(this) == "function" && !this.firstBy) ? this : false;
         var y = makeCompareFunction(func, opt);
         var f = x ? function(a, b) {
                         return x(a,b) || y(a,b);
@@ -49,5 +52,6 @@ module.exports = (function() {
         f.thenBy = tb;
         return f;
     }
+    tb.firstBy = tb;
     return tb;
 })();

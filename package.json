@@ -1,6 +1,6 @@
 {
   "name": "thenby",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Micro library for sorting arrays using the firstBy().thenBy().thenBy() syntax",
   "main": "thenBy.module.js",
   "types": "thenBy.module.d.ts",
