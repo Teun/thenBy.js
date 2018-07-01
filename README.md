@@ -41,7 +41,7 @@ If an element doesn't have the property defined, it will sort like the empty str
 
 ### Sort by unary functions
 You can also pass a function that takes a single item and returns its sorting key.
-```
+```javascript
 // first by length of name, then by population, then by ID
 data.sort(
     firstBy(function (v) { return v.name.length; })
@@ -51,7 +51,7 @@ data.sort(
 ```
 
 Note that javascript contains a number of standard functions that can be passed in here as well. The Number() function will make your sorting sort on numeric values instead of lexical values:
-```
+```javascript
 var values = ["2", "20", "03", "-2", "0", 200, "2"];
 var sorted = values.sort(firstBy(Number));
 ```
