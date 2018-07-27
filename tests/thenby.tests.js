@@ -256,6 +256,35 @@ suite('Sorting with property names and undefined properties', function () {
         done();
     });
 });
+suite('Sorting with unary function and custom compare', function () {
+    const suits = ['C', 'D', 'H', 'S'];
+    const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    var suitCompare = (s1, s2) =>{
+        return suits.indexOf(s1) - suits.indexOf(s2);
+    }
+    var cardCompare = (c1, c2) =>{
+        return cards.indexOf(c1) - cards.indexOf(c2);
+    }
+	var handOfCards =  [
+            { id: 7, suit:"C", card:"A" },
+            { id: 8, suit:"H", card:"10" },
+            { id: 9, suit:"S", card:"10" },
+            { id: 10, suit:"D", card:"10" },
+            { id: 11, suit:"S", card:"9" }
+        ];
+
+    test('Sort by value, then by suit', function (done) {
+    	var s = firstBy("card", {cmp: cardCompare, direction:-1})
+                .thenBy("suit", {cmp: suitCompare, direction: -1});
+        handOfCards.sort(s);
+        assert.equal(7, handOfCards[0].id);
+        assert.equal(9, handOfCards[1].id);
+        assert.equal(8, handOfCards[2].id);
+        assert.equal(10, handOfCards[3].id);
+        assert.equal(11, handOfCards[4].id);
+        done();
+    });
+});
 suite('Sorting on numerical values', function () {
     test('Sort strings with numbers in them', function (done) {
         var values = ["2", "20", "03", "-2", "0", "200", "2"];
