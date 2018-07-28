@@ -73,7 +73,7 @@ If you want to use both descending and ignoreCase, you have to use the options s
 data.sort(firstBy("name", {ignoreCase:true, direction:-1}));
 ```
 ### Custom compare function
-If you have more specific wishes for the exact sort order, but still want to use the convenience of unary functions or sorting on property names, you can pass in you own compare function in the options:
+If you have more specific wishes for the exact sort order, but still want to use the convenience of unary functions or sorting on property names, you can pass in you own compare function in the options. Here we use a compare function that known about the relative values of playing cards::
 
 ```javascript
 const cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -88,6 +88,8 @@ var handOfCards =  [
 handOfCards.sort(firstBy("card", {cmp: cardCompare, direction:-1}));
 
 ```
+You can use the `cmp` function together with `direction`, but not with `ignoreCase` (for obvious reasons). 
+
 ### Internationalization: Using javascripts native `Intl.Collator`
 One of the more interesting custom compare functions you may want to pass in is the native `compare` function that is exposed by `Intl.Collator`. This compare function knows about the different sorting rules in different cultures. Many browsers have these implemented, but in NodeJS, the API is implemented, but only for the English culture. You would use it with thenBy like this:
 
@@ -100,7 +102,7 @@ data.sort(
     firstBy("name", {cmp: swedishCompare})
 );
 ```
-You can use the `cmp` function together with `direction`, but not with `ignoreCase` (for obvious reasons). Check the [details on using Intl.Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator).
+Check the [details on using Intl.Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator).
 
 ### A word on performance
 thenBy constructs a comparer function for you. It does this by combining the functions you pass in with a number of small utility functions that perform tasks like "reverting", "combining the current sort order with the previous one", etc. Also, these operations try to work correctly, no matter what content is in the sorted array. There are two steps here that cost time: constructing the über-function and running it. The construction time should always be negligible. The run time however can be slower than when you carefully handcraft the compare function. Still, *normally you shouldn't worry about this*, but if you're sorting very large sets, it could matter. For example, there is some overhead in making several small functions call each other instead of creating one piece of code. Also, if you know your data well, and know that a specific field is *alwways present* and is *always a number*, you could code a significantly faster compare function then thenBy's results. The unit tests contain an extreme example.
