@@ -284,6 +284,18 @@ suite('Sorting with unary function and custom compare', function () {
         assert.equal(11, handOfCards[4].id);
         done();
     });
+    test('using Intl.Collator', function (done) {
+        var cmp = (new Intl.Collator('en')).compare;
+        var data = [{a:"aäb"}, {a:"aãb"}, {a:"aab"}, {a:"abb"}, {a:"Aäb"}];
+        data.sort(firstBy("a", {cmp: cmp}));
+        console.log(data);
+        assert.equal("aab", data[0].a);
+        assert.equal("aäb", data[1].a);
+        assert.equal("Aäb", data[2].a);
+        assert.equal("aãb", data[3].a);
+        assert.equal("abb", data[4].a);
+        done();
+    });
 });
 suite('Sorting on numerical values', function () {
     test('Sort strings with numbers in them', function (done) {
