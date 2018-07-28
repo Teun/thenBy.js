@@ -30,7 +30,8 @@ var firstBy = (function() {
             // f is a unary function mapping a single item to its sort score
             var uf = f;
             var preprocess = opt.ignoreCase?ignoreCase:identity;
-            f = function(v1,v2) {return preprocess(uf(v1)) < preprocess(uf(v2)) ? -1 : preprocess(uf(v1)) > preprocess(uf(v2)) ? 1 : 0;}
+            var cmp = opt.cmp || function(v1,v2) {return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;}
+            f = function(v1,v2) {return cmp(preprocess(uf(v1)), preprocess(uf(v2)));}
         }
         if(opt.direction === -1) return function(v1,v2){return -f(v1,v2)};
         return f;
