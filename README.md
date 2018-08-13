@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [thenBy.js](#thenbyjs)
+    - [Sort by property names](#sort-by-property-names)
+    - [Sort by unary functions](#sort-by-unary-functions)
+    - [Sort descending](#sort-descending)
+    - [Case insensitive sorting](#case-insensitive-sorting)
+    - [Custom compare function](#custom-compare-function)
+    - [Internationalization: Using javascripts native `Intl.Collator`](#internationalization-using-javascripts-native-intlcollator)
+    - [A word on performance](#a-word-on-performance)
+    - [Install in your HTML](#install-in-your-html)
+    - [Install in node.js](#install-in-nodejs)
+    - [Install via Bower](#install-via-bower)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 thenBy.js
 =========
 
