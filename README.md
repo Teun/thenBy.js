@@ -2,22 +2,22 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [thenBy.js](#thenbyjs)
+- [thenBy.js usage](#thenbyjs-usage)
     - [Sort by property names](#sort-by-property-names)
     - [Sort by unary functions](#sort-by-unary-functions)
+  - [Extra options](#extra-options)
     - [Sort descending](#sort-descending)
     - [Case insensitive sorting](#case-insensitive-sorting)
     - [Custom compare function](#custom-compare-function)
     - [Internationalization: Using javascripts native `Intl.Collator`](#internationalization-using-javascripts-native-intlcollator)
-    - [A word on performance](#a-word-on-performance)
+  - [A word on performance](#a-word-on-performance)
+  - [Installing](#installing)
     - [Install in your HTML](#install-in-your-html)
-    - [Install in node.js](#install-in-nodejs)
-    - [Install via Bower](#install-via-bower)
+    - [Install using npm or yarn](#install-using-npm-or-yarn)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-thenBy.js
-=========
+# thenBy.js usage
 
   [![NPM Version][npm-image]][npm-url]
   [![NPM Downloads][downloads-image]][downloads-url]
@@ -64,7 +64,7 @@ Note that javascript contains a number of standard functions that can be passed 
 var values = ["2", "20", "03", "-2", "0", 200, "2"];
 var sorted = values.sort(firstBy(Number));
 ```
-
+## Extra options
 ### Sort descending
 thenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:
 ```javascript
@@ -122,27 +122,29 @@ data.sort(
 ```
 Check the [details on using Intl.Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator).
 
-### A word on performance
+## A word on performance
 thenBy constructs a comparer function for you. It does this by combining the functions you pass in with a number of small utility functions that perform tasks like "reverting", "combining the current sort order with the previous one", etc. Also, these operations try to work correctly, no matter what content is in the sorted array. There are two steps here that cost time: constructing the über-function and running it. The construction time should always be negligible. The run time however can be slower than when you carefully handcraft the compare function. Still, *normally you shouldn't worry about this*, but if you're sorting very large sets, it could matter. For example, there is some overhead in making several small functions call each other instead of creating one piece of code. Also, if you know your data well, and know that a specific field is *alwways present* and is *always a number*, you could code a significantly faster compare function then thenBy's results. The unit tests contain an extreme example.
 
 If you use thenBy to combine multiple compare functions into one (where each function expects two parameters), the difference is small. Using unary functions adds some overhead, using direction:-1 adds some, using only a property name adds a little, but will check for missing values, which could be optimized. Ignoring case will slow down, but not more so than when handcoded.   
 
+## Installing
 ### Install in your HTML
 To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (699 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
 
-### Install in node.js
+### Install using npm or yarn
 ```npm install thenby```
+
+or
+
+```yarn install thenby```
 
 then in your app:
 
 ```var firstBy = require('thenby');```
 
-or in TypeScript:
+or in TypeScript/ES6:
 
 ```import {firstBy} from "thenby";```
-
-### Install via Bower
-```bower install --save thenby```
 
 
 Thanks a lot to [bergus](https://github.com/bergus), [hagabaka](https://github.com/hagabaka), [infolyzer](https://github.com/infolyzer) and [Foxhoundn](https://github.com/Foxhoundn) for their improvements.
