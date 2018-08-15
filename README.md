@@ -136,7 +136,7 @@ To include it into your page/project, just paste the minified code from https://
 
 or
 
-```yarn install thenby```
+```yarn add thenby```
 
 then in your app:
 
