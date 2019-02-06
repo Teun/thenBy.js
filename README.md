@@ -146,6 +146,8 @@ or in TypeScript/ES6:
 
 ```import {firstBy} from "thenby";```
 
+For a small demo of how TypeScript support looks in a good editor (i.e. VS Code), [check this short video](https://youtu.be/atJPa3AE4bM).
+
 
 Thanks a lot to [bergus](https://github.com/bergus), [hagabaka](https://github.com/hagabaka), [infolyzer](https://github.com/infolyzer) and [Foxhoundn](https://github.com/Foxhoundn) for their improvements.
 Thanks to [jsgoupil](https://github.com/jsgoupil) and [HonoluluHenk](https://github.com/HonoluluHenk) for their help on the TypeScript declaration.
