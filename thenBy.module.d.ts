@@ -1,6 +1,6 @@
 // Type definitions for thenBy
 // Definitions by: Teun Duynstee
-declare const enum SortOrder {Desc = -1, Asc = 1}
+type SortOrder = -1 | 1;
 declare class opt {
     direction?:SortOrder;
     ignoreCase?:boolean;
