@@ -66,12 +66,12 @@ var sorted = values.sort(firstBy(Number));
 ```
 ## Extra options
 ### Sort descending
-thenBy.js allows you to pass in a second parameter for `direction`. If you pass in -1 (nothing else), the sorting will be reversed. So:
+thenBy.js allows you to pass in a second parameter for `direction`. If you pass in 'desc' or -1, the sorting will be reversed. So:
 ```javascript
 // first by length of name descending, then by population descending, then by ID ascending
 data.sort(
     firstBy(function (v1, v2) { return v1.name.length - v2.name.length; }, -1)
-    .thenBy("population", -1)
+    .thenBy("population", "desc")
     .thenBy("id")
 );
 ```
@@ -88,7 +88,7 @@ data.sort(
 If you want to use both descending and ignoreCase, you have to use the options syntax for direction as well:
 ```javascript
 // sort by name, case insensitive and descending
-data.sort(firstBy("name", {ignoreCase:true, direction:-1}));
+data.sort(firstBy("name", {ignoreCase:true, direction:"desc"}));
 ```
 ### Custom compare function
 If you have more specific wishes for the exact sort order, but still want to use the convenience of unary functions or sorting on property names, you can pass in you own compare function in the options. Here we use a compare function that known about the relative values of playing cards::
@@ -103,7 +103,7 @@ var handOfCards =  [
         { id: 8, suit:"d", card:"10" },
         // etc
     ];
-handOfCards.sort(firstBy("card", {cmp: cardCompare, direction:-1}));
+handOfCards.sort(firstBy("card", {cmp: cardCompare, direction: "desc"}));
 
 ```
 You can use the `cmp` function together with `direction`, but not with `ignoreCase` (for obvious reasons). 
@@ -125,7 +125,7 @@ Check the [details on using Intl.Collator](https://developer.mozilla.org/en-US/d
 ## A word on performance
 thenBy constructs a comparer function for you. It does this by combining the functions you pass in with a number of small utility functions that perform tasks like "reverting", "combining the current sort order with the previous one", etc. Also, these operations try to work correctly, no matter what content is in the sorted array. There are two steps here that cost time: constructing the über-function and running it. The construction time should always be negligible. The run time however can be slower than when you carefully handcraft the compare function. Still, *normally you shouldn't worry about this*, but if you're sorting very large sets, it could matter. For example, there is some overhead in making several small functions call each other instead of creating one piece of code. Also, if you know your data well, and know that a specific field is *alwways present* and is *always a number*, you could code a significantly faster compare function then thenBy's results. The unit tests contain an extreme example.
 
-If you use thenBy to combine multiple compare functions into one (where each function expects two parameters), the difference is small. Using unary functions adds some overhead, using direction:-1 adds some, using only a property name adds a little, but will check for missing values, which could be optimized. Ignoring case will slow down, but not more so than when handcoded.   
+If you use thenBy to combine multiple compare functions into one (where each function expects two parameters), the difference is small. Using unary functions adds some overhead, using direction:desc adds some, using only a property name adds a little, but will check for missing values, which could be optimized. Ignoring case will slow down, but not more so than when handcoded.   
 
 ## Installing
 ### Install in your HTML

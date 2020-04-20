@@ -1,6 +1,6 @@
 // Type definitions for thenBy
-// Definitions by: Teun Duynstee
-type SortOrder = -1 | 1;
+// Definitions by: Teun Duynstee (with significant help from @HonoluluHenk)
+type SortOrder = "asc" | "desc" | -1 | 1;
 declare class opt {
     direction?:SortOrder;
     ignoreCase?:boolean;
