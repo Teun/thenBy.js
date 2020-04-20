@@ -20,6 +20,10 @@
     "thenBy.module.d.ts",
     "thenBy.min.js"
   ],
+  "scripts": {
+    "test": "gulp",
+    "build": "gulp build"
+  },
   "author": "Teun Duynstee",
   "license": "Apache 2.0",
   "bugs": {
