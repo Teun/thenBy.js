@@ -20,7 +20,8 @@ module.exports = (function() {
     function ignoreCase(v){return typeof(v)==="string" ? v.toLowerCase() : v;}
 
     function makeCompareFunction(f, opt){
-        opt = typeof(opt)==="number" ? {direction:opt} : opt||{};
+        opt = typeof(opt)==="object" ? opt : {direction:opt};
+        
         if(typeof(f)!="function"){
             var prop = f;
             // make unary function
@@ -33,7 +34,8 @@ module.exports = (function() {
             var cmp = opt.cmp || function(v1,v2) {return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;}
             f = function(v1,v2) {return cmp(preprocess(uf(v1)), preprocess(uf(v2)));}
         }
-        if(opt.direction === -1) return function(v1,v2){return -f(v1,v2)};
+        const descTokens = {"-1":'', desc:''};
+        if(opt.direction in descTokens) return function(v1,v2){return -f(v1,v2)};
         return f;
     }
 
