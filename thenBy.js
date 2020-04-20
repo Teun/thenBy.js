@@ -20,7 +20,9 @@ var firstBy = (function() {
     function ignoreCase(v){return typeof(v)==="string" ? v.toLowerCase() : v;}
 
     function makeCompareFunction(f, opt){
-        opt = typeof(opt)==="number" ? {direction:opt} : opt||{};
+        opt = typeof(opt)==="object" ? opt : {direction:opt};
+        opt.direction = opt.direction === 'desc' ? -1 : opt.direction;
+        
         if(typeof(f)!="function"){
             var prop = f;
             // make unary function
