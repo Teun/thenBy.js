@@ -5,6 +5,9 @@ declare class opt {
     direction?:SortOrder;
     ignoreCase?:boolean;
 }
+declare class typedOpt<T> extends opt {
+    cmp?: (a:T, b:T)=> number;
+}
 interface IThenBy<T> {
     (v1: T, v2: T) : number;
     /** 
@@ -18,13 +21,13 @@ interface IThenBy<T> {
      * @param select function that receives a value from the sorted array and selects the thing to sort on
      * @param direction reverse by passing -1. opt for other options
     **/
-   thenBy<T>(select: ((v: T) => any), direction?: SortOrder | opt): IThenBy<T>;
+   thenBy<T, U>(select: ((v: T) => U), direction?: SortOrder | typedOpt<U>): IThenBy<T>;
     /** 
      * Shorthand for sorting on a simple property.
      * @param byPropertyName is the name of the property to sort on as a string
      * @param direction reverse by passing -1. opt for other options
     **/
-    thenBy<T>(byPropertyName: (keyof T), direction?: SortOrder | opt): IThenBy<T>;
+    thenBy<T>(byPropertyName: (keyof T), direction?: SortOrder | typedOpt<any>): IThenBy<T>;
 }
 declare module "thenby" {
     /** 
@@ -38,11 +41,11 @@ declare module "thenby" {
      * @param select function that receives a value from the sorted array and selects the thing to sort on
      * @param direction reverse by passing -1. opt for other options
     **/
-    export function firstBy<T>(select: ((v: T) => any), direction?: SortOrder | opt): IThenBy<T>;
+    export function firstBy<T,U>(select: ((v: T) => U), direction?: SortOrder | typedOpt<U>): IThenBy<T>;
     /** 
      * Shorthand for sorting on a simple property.
      * @param byPropertyName is the name of the property to sort on as a string
      * @param direction reverse by passing -1. opt for other options
     **/
-    export function firstBy<T>(byPropertyName: (keyof T), direction?: SortOrder | opt): IThenBy<T>;
+    export function firstBy<T>(byPropertyName: (keyof T), direction?: SortOrder | typedOpt<any>): IThenBy<T>;
   }
