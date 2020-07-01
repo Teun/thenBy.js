@@ -25,7 +25,7 @@
     "build": "gulp build"
   },
   "author": "Teun Duynstee",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Teun/thenBy.js/issues"
   },
