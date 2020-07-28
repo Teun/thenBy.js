@@ -19,13 +19,28 @@ var firstBy = (function() {
 
     function ignoreCase(v){return typeof(v)==="string" ? v.toLowerCase() : v;}
 
+    function byString(o, s) {
+        s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+        s = s.replace(/^\./, '');           // strip a leading dot
+        var a = s.split('.');
+        for (var i = 0, n = a.length; i < n; ++i) {
+            var k = a[i];
+            if (k in o) {
+                o = o[k];
+            } else {
+                return;
+            }
+        }
+        return o;
+    }
+
     function makeCompareFunction(f, opt){
         opt = typeof(opt)==="object" ? opt : {direction:opt};
-        
+
         if(typeof(f)!="function"){
             var prop = f;
             // make unary function
-            f = function(v1){return !!v1[prop] ? v1[prop] : "";}
+            f = function(v1){return !!byString(v1, prop) ? byString(v1, prop) : "";}
         }
         if(f.length === 1) {
             // f is a unary function mapping a single item to its sort score
@@ -43,7 +58,7 @@ var firstBy = (function() {
        which is applied in case the first one returns 0 (equal)
        returns a new compare function, which has a `thenBy` method as well */
     function tb(func, opt) {
-        /* should get value false for the first call. This can be done by calling the 
+        /* should get value false for the first call. This can be done by calling the
         exported function, or the firstBy property on it (for es6 module compatibility)
         */
         var x = (typeof(this) == "function" && !this.firstBy) ? this : false;
