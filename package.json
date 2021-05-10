@@ -37,7 +37,7 @@
     "gulp-mocha": "^7.0.2",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "gulp-uglify": "^2.1.2",
+    "gulp-uglify": "^3.0.2",
     "gulp-umd": "^2.0.0",
     "performance-now": "^0.2.0"
   },
