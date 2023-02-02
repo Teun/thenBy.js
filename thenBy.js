@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-var firstBy = (function() {
+export function firstBy() {
 
     function identity(v){return v;}
 
@@ -57,4 +57,4 @@ var firstBy = (function() {
     }
     tb.firstBy = tb;
     return tb;
-})();
+};

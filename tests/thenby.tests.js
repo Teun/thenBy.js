@@ -1,6 +1,6 @@
 
 var assert = assert || require('chai').assert;
-var firstBy = firstBy || require('..');
+var firstBy = firstBy || require('../thenBy.min');
 var performance = performance || {now: require('performance-now')};
 
 suite('Library set up', function () {
