@@ -32,7 +32,7 @@
   "homepage": "https://github.com/Teun/thenBy.js",
   "devDependencies": {
     "chai": "^3.5.0",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-insert": "^0.5.0",
     "gulp-mocha": "^8.0.0",
     "gulp-rename": "^1.2.2",
