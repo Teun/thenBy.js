@@ -27,5 +27,5 @@ jobs:
     - run: npm install
     - run: npm run build
     - name: Verify generated files are up to date
-      run: git diff --exit-code thenBy.module.js thenBy.min.js
+      run: git diff --exit-code thenBy.module.js thenBy.esm.js thenBy.min.js
     - run: npm test
