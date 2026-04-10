@@ -1,6 +1,6 @@
 {
   "name": "thenby",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Micro library for sorting arrays using the firstBy().thenBy().thenBy() syntax",
   "main": "thenBy.module.js",
   "types": "thenBy.module.d.ts",
@@ -21,8 +21,8 @@
     "thenBy.min.js"
   ],
   "scripts": {
-    "test": "gulp",
-    "build": "gulp build"
+    "test": "node build.js && node --test --test-reporter=tap tests/thenby.tests.js",
+    "build": "node build.js"
   },
   "author": "Teun Duynstee",
   "license": "Apache-2.0",
@@ -31,15 +31,7 @@
   },
   "homepage": "https://github.com/Teun/thenBy.js",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "gulp": "^5.0.0",
-    "gulp-insert": "^0.5.0",
-    "gulp-mocha": "^8.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
-    "gulp-uglify": "^3.0.2",
-    "gulp-umd": "^2.0.0",
-    "performance-now": "^0.2.0"
+    "terser": "^5.44.0"
   },
   "dependencies": {}
 }
