@@ -4,8 +4,8 @@
     <title></title>
     <script>
         // pasted in:
-        /*** Copyright 2013 Teun Duynstee Licensed under the Apache License, Version 2.0 ***/
-        var firstBy=function(){function n(n){return n}function t(n){return"string"==typeof n?n.toLowerCase():n}function r(r,e){if(e="number"==typeof e?{direction:e}:e||{},"function"!=typeof r){var u=r;r=function(n){return n[u]?n[u]:""}}if(1===r.length){var i=r,o=e.ignoreCase?t:n;r=function(n,t){return o(i(n))<o(i(t))?-1:o(i(n))>o(i(t))?1:0}}return-1===e.direction?function(n,t){return-r(n,t)}:r}function e(n,t){return n=r(n,t),n.thenBy=u,n}function u(n,t){var u=this;return n=r(n,t),e(function(t,r){return u(t,r)||n(t,r)})}return e}();
+        /*** Copyright 2026 Teun Duynstee Licensed under the Apache License, Version 2.0 ***/
+        !function(n,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():n.firstBy=t()}("undefined"!=typeof self?self:this,function(){return function(){function n(n){return n}function t(n){return"string"==typeof n?n.toLowerCase():n}function e(i,f){var r="function"==typeof this&&!this.firstBy&&this,o=function(e,i){if(i="object"==typeof i?i:{direction:i},"function"!=typeof e){var f=e;e=function(n){return n[f]?n[f]:""}}if(1===e.length){var r=e,o=i.ignoreCase?t:n,u=i.cmp||function(n,t){return n<t?-1:n>t?1:0};e=function(n,t){return u(o(r(n)),o(r(t)))}}return i.direction in{"-1":"",desc:""}?function(n,t){return-e(n,t)}:e}(i,f),u=r?function(n,t){return r(n,t)||o(n,t)}:o;return u.thenBy=e,u}return e.firstBy=e,e}()});
 
         // sample:
         var data = [
