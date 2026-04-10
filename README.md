@@ -129,9 +129,9 @@ If you use thenBy to combine multiple compare functions into one (where each fun
 
 ## Installing
 ### Install in your HTML
-To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (699 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable (see sample.htm).
+To include it into your page/project, just paste the minified code from https://raw.github.com/Teun/thenBy.js/master/thenBy.min.js into yours (870 characters). If you don't want the `firstBy` function in your global namespace, you can assign it to a local variable.
 
-### Install using npm or yarn
+### Install using (p)npm or yarn
 ```npm install thenby```
 
 or
@@ -140,11 +140,11 @@ or
 
 then in your app:
 
-```var firstBy = require('thenby');```
-
-or in TypeScript/ES6:
-
 ```import {firstBy} from "thenby";```
+
+or if you for some reason still need to use CommonJS:
+
+```var firstBy = require('thenby');```
 
 For a small demo of how TypeScript support looks in a good editor (i.e. VS Code), [check this short video](https://youtu.be/mKJovFLyxro).
 
