@@ -1,13 +1,13 @@
 
-var assert = assert || require('chai').assert;
-var firstBy = firstBy || require('..');
-var performance = performance || {now: require('performance-now')};
+var assert = require('node:assert/strict');
+var firstBy = require('..');
+var performance = globalThis.performance;
+var suite = require('node:test').suite;
+var test = require('node:test').test;
 
 suite('Library set up', function () {
-    test('firstBy should be in global scope', function (done) {
-        if (firstBy) {
-            done();
-        }
+    test('firstBy should be in global scope', function () {
+        assert.ok(firstBy);
     });
 });
 
@@ -22,23 +22,21 @@ suite('Sorting with functions', function () {
             { id: 44, name: "Stuttgard", population: 600000, country: "Germany" },
         ];
 
-    test('Sort by Country, then by Population', function (done) {
+    test('Sort by Country, then by Population', function () {
     	var s = firstBy(function (v1, v2) { return v1.country < v2.country ? -1 : (v1.country > v2.country ? 1 : 0); })
                 .thenBy(function (v1, v2) { return v1.population - v2.population; });
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[5].name);
         assert.equal("Düsseldorf", cityData[0].name);
-        done();
     });
-    test('Sort by Country, then by Population, using unary functions', function(done) {
+    test('Sort by Country, then by Population, using unary functions', function() {
         var s = firstBy(function(v) { return v.country; })
                 .thenBy(function(v) { return v.population; });
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[5].name);
         assert.equal("Düsseldorf", cityData[0].name);
-        done();
     });
-    test('Sort by length of name, then by population, then by ID', function (done) {
+    test('Sort by length of name, then by population, then by ID', function () {
         var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
                  .thenBy(function (v1, v2) { return v1.population - v2.population; })
                  .thenBy(function (v1, v2) { return v1.id - v2.id; });
@@ -51,9 +49,8 @@ suite('Sorting with functions', function () {
         // expect Stutgard just after Rotterdam, same name length, same population, higher ID
         assert.equal("Rotterdam", cityData[2].name);
         assert.equal("Stuttgard", cityData[3].name);
-        done();
     });
-    test('Sort by length of name, then by population, then by ID, using unary functions', function (done) {
+    test('Sort by length of name, then by population, then by ID, using unary functions', function () {
         var s = firstBy(function (v) { return v.name.length; })
                  .thenBy(function (v) { return v.population; })
                  .thenBy(function (v) { return v.id; });
@@ -66,7 +63,6 @@ suite('Sorting with functions', function () {
         // expect Stutgard just after Rotterdam, same name length, same population, higher ID
         assert.equal("Rotterdam", cityData[2].name);
         assert.equal("Stuttgard", cityData[3].name);
-        done();
     });
 
 });
@@ -78,34 +74,31 @@ suite('Sorting while managing case sensitivity', function () {
     { id: 8, name:  "prague", population: 3000000, country: "Czech republic"},
   ];
 
-  test('Sort by Name, using unary function', function (done) {
+  test('Sort by Name, using unary function', function () {
     var s = firstBy(function(v) { return v.name });
     cityData.sort(s);
     assert.equal("Brno", cityData[0].name);
     assert.equal("Ostrava", cityData[1].name);
     assert.equal("karvina", cityData[2].name);
     assert.equal("prague", cityData[3].name);
-    done();
   });
-  test('Sort by Name, ignoring the case, using unary function', function (done) {
+  test('Sort by Name, ignoring the case, using unary function', function () {
     var s = firstBy(function(v) { return v.name }, {ignoreCase:true, direction:1});
     cityData.sort(s);
     assert.equal("Brno", cityData[0].name);
     assert.equal("karvina", cityData[1].name);
     assert.equal("Ostrava", cityData[2].name);
     assert.equal("prague", cityData[3].name);
-    done();
   });
-  test('Sort by Name desc, ignoring the case, using unary function', function (done) {
+  test('Sort by Name desc, ignoring the case, using unary function', function () {
     var s = firstBy(function(v) { return v.name }, {ignoreCase:true, direction:'desc'});
     cityData.sort(s);
     assert.equal("Brno", cityData[3].name);
     assert.equal("karvina", cityData[2].name);
     assert.equal("Ostrava", cityData[1].name);
     assert.equal("prague", cityData[0].name);
-    done();
   });
-  test('Sort by Country, then by Name ignoring the case, using property name', function (done) {
+  test('Sort by Country, then by Name ignoring the case, using property name', function () {
     var s = firstBy("country")
       .thenBy("name", {ignoreCase:true, direction:1});
     cityData.sort(s);
@@ -113,9 +106,8 @@ suite('Sorting while managing case sensitivity', function () {
     assert.equal("prague", cityData[1].name);
     assert.equal("Brno", cityData[2].name);
     assert.equal("Ostrava", cityData[3].name);
-    done();
   });
-  test('Sort by Country ignoring the case using inline .toLowerCase(), then by Name, using function', function (done) {
+  test('Sort by Country ignoring the case using inline .toLowerCase(), then by Name, using function', function () {
     var s = firstBy(function (v1, v2) { v1 = v1.country.toLowerCase(); v2 = v2.country.toLowerCase(); return v1 < v2 ? -1 : (v1 > v2 ? 1 : 0); })
       .thenBy("name");
     cityData.sort(s);
@@ -123,9 +115,8 @@ suite('Sorting while managing case sensitivity', function () {
     assert.equal("Ostrava", cityData[1].name);
     assert.equal("karvina", cityData[2].name);
     assert.equal("prague", cityData[3].name);
-    done();
   });
-  test('Sort by Country ignoring the case, then by Name ignoring the case, using unary function', function (done) {
+  test('Sort by Country ignoring the case, then by Name ignoring the case, using unary function', function () {
     var s = firstBy(function(v) { return v.country }, {ignoreCase:true, direction:1})
       .thenBy(function(v) { return v.name }, {ignoreCase:true, direction:1});
     cityData.sort(s);
@@ -133,7 +124,6 @@ suite('Sorting while managing case sensitivity', function () {
     assert.equal("karvina", cityData[1].name);
     assert.equal("Ostrava", cityData[2].name);
     assert.equal("prague", cityData[3].name);
-    done();
   });
 });
 suite('Sorting with property names', function () {
@@ -146,37 +136,33 @@ suite('Sorting with property names', function () {
             { id: 44, name: "Stuttgard", population: 600000, country: "Germany" },
         ];
 
-    test('Sort by Country, then by Population', function (done) {
+    test('Sort by Country, then by Population', function () {
     	var s = firstBy("country")
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[5].name);
         assert.equal("Düsseldorf", cityData[0].name);
-        done();
     });
-    test('Sort by Country desc, then by Population', function (done) {
+    test('Sort by Country desc, then by Population', function () {
     	var s = firstBy("country", 'desc')
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Berlin", cityData[5].name);
         assert.equal("The Hague", cityData[0].name);
-        done();
     });
-    test('Sort by Country asc, then by Population desc', function (done) {
+    test('Sort by Country asc, then by Population desc', function () {
     	var s = firstBy("country", "asc")
                 .thenBy("population", 'desc');
         cityData.sort(s);
         assert.equal("The Hague", cityData[5].name);
         assert.equal("Berlin", cityData[0].name);
-        done();
     });
-    test('Sort by Country, then by Population desc (using -1)', function (done) {
+    test('Sort by Country, then by Population desc (using -1)', function () {
     	var s = firstBy("country")
                 .thenBy("population", -1);
         cityData.sort(s);
         assert.equal("The Hague", cityData[5].name);
         assert.equal("Berlin", cityData[0].name);
-        done();
     });
 });
 suite('Sorting with functions and property names together', function () {
@@ -189,53 +175,47 @@ suite('Sorting with functions and property names together', function () {
             { id: 44, name: "Stuttgard", population: 600000, country: "Germany" },
         ];
 
-    test('Sort by name length, then by Population', function (done) {
+    test('Sort by name length, then by Population', function () {
     	var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Berlin", cityData[0].name);
         assert.equal("Düsseldorf", cityData[5].name);
-        done();
     });
-    test('Sort by name length using a unary function, then by Population', function (done) {
+    test('Sort by name length using a unary function, then by Population', function () {
     	var s = firstBy(function (v) { return v.name.length; })
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Berlin", cityData[0].name);
         assert.equal("Düsseldorf", cityData[5].name);
-        done();
     });
-    test('Sort by name length desc, then by Population', function (done) {
+    test('Sort by name length desc, then by Population', function () {
     	var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; }, 'desc')
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[4].name);
         assert.equal("The Hague", cityData[1].name);
-        done();
     });
-    test('Sort by name length desc using a unary function, then by Population', function (done) {
+    test('Sort by name length desc using a unary function, then by Population', function () {
     	var s = firstBy(function (v) { return v.name.length; }, -1)
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[4].name);
         assert.equal("The Hague", cityData[1].name);
-        done();
     });
-    test('Sort by name length, then by Population desc', function (done) {
+    test('Sort by name length, then by Population desc', function () {
     	var s = firstBy(function (v1, v2) { return v1.name.length - v2.name.length; })
                 .thenBy("population", -1);
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[1].name);
         assert.equal("The Hague", cityData[4].name);
-        done();
     });
-    test('Sort by name length using a unary function, then by Population desc', function (done) {
+    test('Sort by name length using a unary function, then by Population desc', function () {
     	var s = firstBy(function (v) { return v.name.length; })
                 .thenBy("population", -1);
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[1].name);
         assert.equal("The Hague", cityData[4].name);
-        done();
     });
 });
 suite('Sorting with property names and undefined properties', function () {
@@ -248,29 +228,26 @@ suite('Sorting with property names and undefined properties', function () {
             { id: 44, population: 600000, country: "Germany" }, // Missing name: Stuttgard
         ];
 
-    test('Sort by Country, then by Population, missing country comes first', function (done) {
+    test('Sort by Country, then by Population, missing country comes first', function () {
     	var s = firstBy("country")
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Amsterdam", cityData[5].name);
         assert.equal("Rotterdam", cityData[0].name);
-        done();
     });
-    test('Sort by Country desc, then by Population, missing country comes last', function (done) {
+    test('Sort by Country desc, then by Population, missing country comes last', function () {
     	var s = firstBy("country", -1)
                 .thenBy("population");
         cityData.sort(s);
         assert.equal("Rotterdam", cityData[5].name);
         assert.equal("The Hague", cityData[0].name);
-        done();
     });
-    test('Sort by Country, then by Population desc', function (done) {
+    test('Sort by Country, then by Population desc', function () {
     	var s = firstBy("country")
                 .thenBy("population", 'desc');
         cityData.sort(s);
         assert.equal("The Hague", cityData[5].name);
         assert.equal("Rotterdam", cityData[0].name);
-        done();
     });
 });
 suite('Sorting with unary function and custom compare', function () {
@@ -290,7 +267,7 @@ suite('Sorting with unary function and custom compare', function () {
             { id: 11, suit:"S", card:"9" }
         ];
 
-    test('Sort by value, then by suit', function (done) {
+    test('Sort by value, then by suit', function () {
     	var s = firstBy("card", {cmp: cardCompare, direction:-1})
                 .thenBy("suit", {cmp: suitCompare, direction: -1});
         handOfCards.sort(s);
@@ -299,9 +276,8 @@ suite('Sorting with unary function and custom compare', function () {
         assert.equal(8, handOfCards[2].id);
         assert.equal(10, handOfCards[3].id);
         assert.equal(11, handOfCards[4].id);
-        done();
     });
-    test('using Intl.Collator', function (done) {
+    test('using Intl.Collator', function () {
         var cmp = (new Intl.Collator('en')).compare;
         var data = [{a:"aäb"}, {a:"aãb"}, {a:"aab"}, {a:"abb"}, {a:"Aäb"}];
         data.sort(firstBy("a", {cmp: cmp}));
@@ -311,36 +287,32 @@ suite('Sorting with unary function and custom compare', function () {
         assert.equal("Aäb", data[2].a);
         assert.equal("aãb", data[3].a);
         assert.equal("abb", data[4].a);
-        done();
     });
 });
 suite('Sorting on numerical values', function () {
-    test('Sort strings with numbers in them', function (done) {
+    test('Sort strings with numbers in them', function () {
         var values = ["2", "20", "03", "-2", "0", "200", "2"];
         var sorted = values.sort(firstBy(Number));
 
         ["-2", "0", "2", "2", "03", "20", "200"].forEach((v,i)=>{
             assert.equal(sorted[i], v);
         });
-        done();
     });
-    test('Sort strings with numbers in them and normal numbers together', function (done) {
+    test('Sort strings with numbers in them and normal numbers together', function () {
         var values = ["2", "20", "03", "-2", "0", 200, "2"];
         var sorted = values.sort(firstBy(Number));
 
         ["-2", "0", "2", "2", "03", "20", 200].forEach((v,i)=>{
             assert.equal(sorted[i], v);
         });
-        done();
     });
-    test('Sort strings with numbers in them in properties', function (done) {
+    test('Sort strings with numbers in them in properties', function () {
         var values = [{a:"2"}, {a:"20"}, {a:"03"}, {a:"-2"}, {a:"0"}, {a:"200"}, {a:"2"}];
         var sorted = values.sort(firstBy(function(v){return Number(v.a)}));
 
         ["-2", "0", "2", "2", "03", "20", "200"].forEach((v,i)=>{
             assert.equal(sorted[i].a, v);
         });
-        done();
     });
 });
 
@@ -351,7 +323,7 @@ suite('Sorting performance', function () {
         randomData.push({firstNumber:Math.floor(Math.random() * 100), secondNumber: Math.floor(Math.random() * 100)});
     }
 
-    test('Should not be much slower than handcoded', function (done) {
+    test('Should not be much slower than handcoded', function () {
         var clone;
         var start = performance.now();
         var compare = firstBy("firstNumber").thenBy("secondNumber", -1);
@@ -401,6 +373,5 @@ suite('Sorting performance', function () {
         }
         var lap2 = performance.now() - start;
         console.log("optimized hand coded", lap2);
-        done();
     });
 });
