@@ -1,6 +1,6 @@
 {
   "name": "thenby",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Micro library for sorting arrays using the firstBy().thenBy().thenBy() syntax",
   "main": "thenBy.module.js",
   "module": "thenBy.esm.js",
@@ -37,7 +37,7 @@
     "thenBy.min.js"
   ],
   "scripts": {
-    "test": "node build.mjs && node --test --test-reporter=tap tests/thenby.tests.js",
+    "test": "node build.mjs && npx tsc --project tsconfig.json && node --test --test-reporter=tap tests/thenby.tests.js",
     "build": "node build.mjs"
   },
   "author": "Teun Duynstee",
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/Teun/thenBy.js",
   "devDependencies": {
-    "terser": "^5.44.0"
-  },
-  "dependencies": {}
+    "terser": "^5.44.0",
+    "typescript": "^6.0.3"
+  }
 }
