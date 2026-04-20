@@ -30,7 +30,9 @@ interface IThenBy<T> {
      * @param byPropertyName is the name of the property to sort on as a string
      * @param direction reverse by passing -1. opt for other options
      **/
-    thenBy(byPropertyName: keyof T, direction?: SortOrder | TypedOpt<any>): IThenBy<T>;
+    thenBy(byPropertyName: keyof T & string, direction?: SortOrder | TypedOpt<any>): IThenBy<T>;
+    /** @internal fallback when T cannot be inferred — accepts any string key */
+    thenBy(byPropertyName: string, direction?: SortOrder | TypedOpt<any>): IThenBy<T>;
 }
 
 /**
@@ -50,11 +52,6 @@ export function firstBy<T, U>(select: (v: T) => U, direction?: SortOrder | Typed
  * @param byPropertyName is the name of the property to sort on as a string
  * @param direction reverse by passing -1. opt for other options
  **/
-export function firstBy<T>(byPropertyName: keyof T, direction?: SortOrder | TypedOpt<any>): IThenBy<T>;
+export function firstBy<T>(byPropertyName: keyof T & string, direction?: SortOrder | TypedOpt<any>): IThenBy<T>;
 
 export default firstBy;
-
-// Ambient module declaration for legacy moduleResolution modes
-declare module "thenby" {
-    export { firstBy, IThenBy, Opt, TypedOpt, SortOrder };
-}
